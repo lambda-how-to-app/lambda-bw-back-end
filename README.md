@@ -82,29 +82,26 @@ To be done
 
 The user interface is built for easy navigation and use of the application. It includes the following:
 
-1. The users can signup as creators or c.
+1. The users can signup as creators or user.
 2. Users can create an account and log in.
-3. The users should be able to register as candidate.
-4. The admin should be able to view all users
-5. The user can view election result
+3. The users should be able to view life hacks
+4. The creator can create, read, update and delete life hacks created by them.
+5. The user can share and save life hacks.
 
 ### Authentication
 
 - It uses JSON Web Token (JWT) for authentication.
 - Token is generated on user login
 - Token is perpetually verified to check the state of the user if logged in or not.
-- Admin User will be pre-seeded into the application with administrative priviledges
 
 ## Deployment
 
-This Application will be deployed on [Heroku Deploy](https://the-politico.herokuapp.com/)
+This Application will be deployed on [Heroku Deploy]()
 
 ## Useful Links
 
-1. Project Management road map [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2238882)
-2. [Github Repo](https://github.com/PascalUlor/politico-app)
-3. UI templates[GH-PAGES](https://pascalulor.github.io/politico-app/)
-4. Live demo on [Heroku Deploy](https://the-politico.herokuapp.com/)
+1. Project Management road map [Trello Board](https://trello.com/b/peDNBtDc/how-to-app)
+2. [Github Repo](https://github.com/lambda-how-to-app/lambda-bw-back-end)
 
 ## Acknowledgment
 
