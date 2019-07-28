@@ -1,0 +1,36 @@
+{
+  "name": "how-to-app",
+  "version": "1.0.0",
+  "description": "How-to-app is a fullstack javascript application that enables users share and guide people on life hack ideas and skills",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lambda-how-to-app/lambda-bw-back-end.git"
+  },
+  "author": "pascal ulor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lambda-how-to-app/lambda-bw-back-end/issues"
+  },
+  "homepage": "https://github.com/lambda-how-to-app/lambda-bw-back-end#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "helmet": "^3.19.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.19.1",
+    "knex-cleaner": "^1.2.1",
+    "sqlite3": "^4.0.9"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "eslint": "^6.1.0",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "supertest": "^4.0.2"
+  }
+}
