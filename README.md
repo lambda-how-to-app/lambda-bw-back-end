@@ -2,7 +2,7 @@
 
 lambda build week backend repo
 
-# POLITICO
+# HOW-TO
 
 **How-To-App** is a fullstack javascript application that enables users share and guide people on life hack ideas and skills.
 
@@ -14,7 +14,7 @@ lambda build week backend repo
 2. [Technology Stack](#technology-stack)
    ..\* [Dependencies](#dependencies)
 3. [Features](#features 'Features')
-4. [Built With](#built-with 'Built With')
+4. [API-DOCUMENTATION](#api-documentation 'API-DOCUMENTATION')
 5. [Deployment](#deployment 'Deployment')
 6. [Useful Links](#author 'Useful Links')
 7. [Acknowledgment](#acknowledgment 'Acknowledgment')
@@ -88,6 +88,68 @@ The user interface is built for easy navigation and use of the application. It i
 4. The creator can create, read, update and delete life hacks created by them.
 5. The user can share and save life hacks.
 
+## API-DOCUMENTATION
+
+### Endpoints
+
+| Method | Endpoint       | Description                                                                                                                               |
+| ------ | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| POST   | /api/v1/signup | Creates a new user using the information {`username, email, password (and guide which false by default)`} sent inside the `request body`. |
+| POST   | /api/v1/login  | logs in a signed user using information {`username or email and password`} sent inside of the `request body`.                             |
+
+### Fields
+
+| Field    | Data Type | Metadata                                                                                      |
+| -------- | --------- | --------------------------------------------------------------------------------------------- |
+| username | string    | Alphanumeric value `required`                                                                 |
+| email    | string    | Must be a valid email `required`                                                              |
+| password |           | Not less than 8 characters`required`.                                                         |
+| guide    | boolean   | `defaults to [false]` used to indicate if a user wants to signup as a guide or not `required` |
+
+### Response
+
+#### Signup
+
+```
+{
+    "success": true,
+    "statusCode": 201,
+    "message": "Signup succesful",
+    "body": {
+        "userId": 1,
+        "userName": "clark",
+        "email": "clark@gmail.com",
+        "guide": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJOYW1lIjoiY2xhcmsiLCJlbWFpbCI6ImNsYXJrQGdtYWlsLmNvbSIsImd1aWRlIjp0cnVlLCJpYXQiOjE1NjQ0MzAwNzMsImV4cCI6MTU2OTYxNDA3M30.YmqIP5t84pIUrLQDGtK_UPNVLgyLh6iv6ExDBlRDsVw"
+    }
+}
+```
+
+```
+{
+    "success": false,
+    "statusCode": 409,
+    "message": "User with email or username already exist"
+}
+```
+
+### Login
+
+```
+{
+    "success": true,
+    "statusCode": 200,
+    "message": "Login succesful",
+    "body": {
+        "userId": 1,
+        "userName": "clark",
+        "email": "clark@gmail.com",
+        "guide": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJOYW1lIjoiY2xhcmsiLCJlbWFpbCI6ImNsYXJrQGdtYWlsLmNvbSIsImd1aWRlIjp0cnVlLCJpYXQiOjE1NjQ0Mzg5NzksImV4cCI6MTU2OTYyMjk3OX0.vpGFTGrHzwezDLbwQLCMjPQvEKUw6_p_0MnnWmBk_q4"
+    }
+}
+```
+
 ### Authentication
 
 - It uses JSON Web Token (JWT) for authentication.
@@ -96,7 +158,7 @@ The user interface is built for easy navigation and use of the application. It i
 
 ## Deployment
 
-This Application will be deployed on [Heroku Deploy]()
+This Application will be deployed on [Heroku Deploy](https://lambda-howto-app.herokuapp.com)
 
 ## Useful Links
 
