@@ -8,7 +8,8 @@ const findAuthUser = () => {
 };
 const findSingleUser = async filter => {
   const user = await db('authenticatedusers').where(filter);
-  return [{ ...user, guide: !!user.guide }];
+  console.log('=======', user);
+  return user;
 };
 const addUser = user => {
   return db('authenticatedusers')
