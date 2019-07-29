@@ -26,10 +26,16 @@ describe('Test case for user table', () => {
     let users = await userModel.findAuthUser();
     expect(users).toMatchObject(users);
   });
-  it('should return a single user by username or id', async () => {
-    let usersByUsername = await userModel.findByUsername(createdUser.username);
-    let usersById = await userModel.findById(createdUser.id);
+  it('should return a single user by email,username or id', async () => {
+    let usersByUsername = await userModel.findSingleUser({
+      username: createdUser.username
+    });
+    let usersById = await userModel.findSingleUser({ id: createdUser.id });
+    let usersByEmail = await userModel.findSingleUser({
+      email: createdUser.email
+    });
     expect(usersByUsername).toMatchObject(usersByUsername);
     expect(usersById).toMatchObject(usersById);
+    expect(usersByEmail).toMatchObject(usersByEmail);
   });
 });

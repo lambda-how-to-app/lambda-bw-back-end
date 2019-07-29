@@ -6,12 +6,10 @@ const findAuthUser = () => {
     return { ...user, guide: !!user.guide };
   });
 };
-const findById = async id => {
-  const user = await db('authenticatedusers').where({ id });
+const findSingleUser = async filter => {
+  const user = await db('authenticatedusers').where(filter);
+  console.log(user);
   return [{ ...user, guide: !!user.guide }];
-};
-const findByUsername = username => {
-  return db('authenticatedusers').where({ username });
 };
 const addUser = user => {
   return db('authenticatedusers')
@@ -20,4 +18,8 @@ const addUser = user => {
     .then(user => user[0]);
 };
 
-module.exports = { addUser, findAuthUser, findById, findByUsername };
+module.exports = {
+  addUser,
+  findAuthUser,
+  findSingleUser
+};
