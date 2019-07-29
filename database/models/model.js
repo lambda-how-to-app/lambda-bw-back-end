@@ -11,7 +11,7 @@ const findById = async id => {
   return [{ ...user, guide: !!user.guide }];
 };
 const findByUsername = username => {
-  return db('authenticatedUsers').where({ username });
+  return db('authenticatedusers').where({ username });
 };
 const addUser = user => {
   return db('authenticatedusers')

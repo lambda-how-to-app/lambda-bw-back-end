@@ -21,4 +21,15 @@ describe('Test case for user table', () => {
     createdUser = await userModel.addUser(user);
     expect(createdUser).toMatchObject(user);
   });
+
+  it('should return all users', async () => {
+    let users = await userModel.findAuthUser();
+    expect(users).toMatchObject(users);
+  });
+  it('should return a single user by username or id', async () => {
+    let usersByUsername = await userModel.findByUsername(createdUser.username);
+    let usersById = await userModel.findById(createdUser.id);
+    expect(usersByUsername).toMatchObject(usersByUsername);
+    expect(usersById).toMatchObject(usersById);
+  });
 });
