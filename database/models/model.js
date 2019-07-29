@@ -1,27 +1,23 @@
 const db = require('../dbConfig');
-const tables = {
-  authUser: 'authenticatedUsers',
-  users: 'users',
-  guide: 'guides',
-  location: 'locations'
-};
 
 const findAuthUser = () => {
-  let users = db(tables.authUser);
+  let users = db('authenticatedusers');
   return users.map(user => {
     return { ...user, guide: !!user.guide };
   });
 };
-const findById = id => {
-  const user = db(tables.authUser).where({ id });
+const findById = async id => {
+  const user = await db('authenticatedusers').where({ id });
   return [{ ...user, guide: !!user.guide }];
 };
 const findByUsername = username => {
-  return db(tables.authUser).where({ username });
+  return db('authenticatedUsers').where({ username });
 };
-const addUser = async user => {
-  const [id] = await db(tables.authUser).insert(user);
-  return findById({ id });
+const addUser = user => {
+  return db('authenticatedusers')
+    .insert(user)
+    .returning('*')
+    .then(user => user[0]);
 };
 
 module.exports = { addUser, findAuthUser, findById, findByUsername };

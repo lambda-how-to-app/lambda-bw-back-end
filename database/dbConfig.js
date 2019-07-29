@@ -1,5 +1,5 @@
 const knex = require('knex');
-const environment = require('../environments');
+const environment = require('../environment');
 
 const config = require('../knexfile');
 
