@@ -4,7 +4,9 @@
   "description": "How-to-app is a fullstack javascript application that enables users share and guide people on life hack ideas and skills",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "cross-env DB_ENV=test jest --watchAll --verbose"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,8 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.19.1",
     "knex-cleaner": "^1.2.1",
-    "sqlite3": "^4.0.9"
+    "pg": "^7.12.0",
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
