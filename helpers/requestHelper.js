@@ -1,11 +1,11 @@
 const requestHandler = {
-  success(res, statusCode, message, payload) {
-    if (payload) {
+  success(res, statusCode, message, body) {
+    if (body) {
       return res.status(statusCode).json({
         success: true,
         statusCode,
         message,
-        data: [{ ...payload }]
+        body
       });
     }
     return res.status(statusCode).json({

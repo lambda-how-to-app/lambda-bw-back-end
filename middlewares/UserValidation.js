@@ -23,8 +23,12 @@ module.exports = class userValidation {
     const userName = await userModel.findSingleUser({
       username: username
     });
-    if (userEmail[0].email || userName[0].username) {
-      return requestHelper.error(res, 409, 'User with details already exist');
+    if (userEmail[0] || userName[0]) {
+      return requestHelper.error(
+        res,
+        409,
+        'User with email or username already exist'
+      );
     }
 
     const check = checkItem({
@@ -35,7 +39,7 @@ module.exports = class userValidation {
     if (Object.keys(check).length > 0) {
       return res.status(400).json({
         statusCode: 400,
-        data: [check]
+        check
       });
     }
     const hash = await bcrypt.hash(password, 12);
@@ -45,9 +49,33 @@ module.exports = class userValidation {
       password: hash,
       guide
     });
-    // console.log('========', newUser);
     // eslint-disable-next-line require-atomic-updates
     req.newuser = newUser;
     next();
+  }
+
+  static async userLogin(req, res, next) {
+    const { username, password, email } = req.body;
+    try {
+      let check;
+      if (email) {
+        check = await userModel.findSingleUser({ email });
+      }
+      if (username) {
+        check = await userModel.findSingleUser({ username });
+      }
+      const checkPassword = await bcrypt.compareSync(
+        password,
+        check[0].password
+      );
+      if (check[0] && checkPassword) {
+        // eslint-disable-next-line require-atomic-updates
+        req.checked = check[0];
+        next();
+      }
+      return requestHelper.error(res, 400, 'wrong credentials');
+    } catch (err) {
+      err;
+    }
   }
 };
