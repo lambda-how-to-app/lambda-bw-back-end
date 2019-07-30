@@ -36,39 +36,73 @@ const addUser = user => {
 // select users.fullname, users.profileimage, locations.locations from users
 // join locations on locations.id = location_id where users.id = 2
 
+/**
+ *
+ *
+ * @param {*} id
+ * @returns users by id
+ */
 const findSingleProfile = async id => {
   let search = await findSingleUser({ id });
 
   let user = await db
-    .select('users.fullname', 'users.profileimage', 'locations.locations')
+    .select(
+      'users.fullname',
+      'users.profileimage',
+      'locations.locations',
+      'authenticatedusers.guide'
+    )
     .from('users')
     .join('locations', 'locations.id', 'users.location_id')
+    .join('authenticatedusers', 'authenticatedusers.id', 'users.auth_id')
     .where({ 'users.auth_id': id });
   let guide = await db
-    .select('guides.fullname', 'guides.profileimage', 'locations.locations')
+    .select(
+      'guides.fullname',
+      'guides.profileimage',
+      'locations.locations',
+      'authenticatedusers.guide'
+    )
     .from('guides')
     .join('locations', 'locations.id', 'guides.location_id')
+    .join('authenticatedusers', 'authenticatedusers.id', 'guides.auth_id')
     .where({ 'guides.auth_id': id });
   if (search[0].guide === false) {
-    user[0].role = 'user';
     return user;
   }
   if (search[0].guide === true) {
-    guide[0].role = 'guide';
     return guide;
   }
 };
 
+/**
+ *
+ *
+ * @param {*} usertype
+ * @returns user profiles
+ */
 const findAllProfile = async usertype => {
   let users = await db
-    .select('users.fullname', 'users.profileimage', 'locations.locations')
+    .select(
+      'users.fullname',
+      'users.profileimage',
+      'locations.locations',
+      'authenticatedusers.guide'
+    )
     .from('users')
-    .join('locations', 'locations.id', 'users.location_id');
+    .join('locations', 'locations.id', 'users.location_id')
+    .join('authenticatedusers', 'authenticatedusers.id', 'users.auth_id');
 
   let guides = await db
-    .select('guides.fullname', 'guides.profileimage', 'locations.locations')
+    .select(
+      'guides.fullname',
+      'guides.profileimage',
+      'locations.locations',
+      'authenticatedusers.guide'
+    )
     .from('guides')
-    .join('locations', 'locations.id', 'guides.location_id');
+    .join('locations', 'locations.id', 'guides.location_id')
+    .join('authenticatedusers', 'authenticatedusers.id', 'guides.auth_id');
   if (usertype) {
     if (usertype === 'users') {
       return Promise.all([users]).then(results => ([users] = results));
@@ -87,18 +121,18 @@ const getLocation = async id => {
   if (id) {
     return db('locations').where({ id });
   }
-  return db('locations').where({ id });
+  return db('locations');
 };
 
 const addProfile = async (profile, id) => {
   let search = await findSingleUser({ id });
-  console.log('======db======', search, search[0].guide);
+
   if (search[0].guide === true) {
     let newProfile = await db('guides')
       .insert(profile)
       .returning('*')
       .then(user => user[0]);
-    console.log('======db======', newProfile);
+
     return newProfile;
   }
   if (search[0].guide === false) {
@@ -106,7 +140,7 @@ const addProfile = async (profile, id) => {
       .insert(profile)
       .returning('*')
       .then(user => user[0]);
-    console.log('======db======', newProfile);
+
     return newProfile;
   }
 };

@@ -113,4 +113,18 @@ module.exports = class UserValidation {
     }
     return next();
   }
+
+  static locationId(req, res, next) {
+    const id = req.params.id;
+
+    const check = checkItem({ id });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
+  }
 };
