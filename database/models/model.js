@@ -43,12 +43,12 @@ const findSingleProfile = async id => {
     .select('users.fullname', 'users.profileimage', 'locations.locations')
     .from('users')
     .join('locations', 'locations.id', 'users.location_id')
-    .where({ id });
+    .where({ 'users.id': id });
   let guide = await db
     .select('guides.fullname', 'guides.profileimage', 'locations.locations')
     .from('guides')
     .join('locations', 'locations.id', 'guides.location_id')
-    .where({ id });
+    .where({ 'guides.id': id });
   if (search[0].guide === false) {
     return user;
   }

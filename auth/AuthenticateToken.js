@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const requestHelper = require('./requestHelper');
+const requestHelper = require('../helpers/requestHelper');
 require('dotenv').config();
 
 /**

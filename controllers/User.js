@@ -18,4 +18,13 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { createUser, login };
+const getProfile = async (req, res) => {
+  try {
+    const userProfile = req.profile;
+    requestHelper.success(res, 200, 'Successfully retrieved user', userProfile);
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
+module.exports = { createUser, login, getProfile };
