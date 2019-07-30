@@ -82,10 +82,40 @@ const findAllProfile = async usertype => {
     results => ([users, guides] = results)
   );
 };
+
+const getLocation = async id => {
+  if (id) {
+    return db('locations').where({ id });
+  }
+  return db('locations').where({ id });
+};
+
+const addProfile = async (profile, id) => {
+  let search = await findSingleUser({ id });
+  console.log('======db======', search, search[0].guide);
+  if (search[0].guide === true) {
+    let newProfile = await db('guides')
+      .insert(profile)
+      .returning('*')
+      .then(user => user[0]);
+    console.log('======db======', newProfile);
+    return newProfile;
+  }
+  if (search[0].guide === false) {
+    let newProfile = await db('users')
+      .insert(profile)
+      .returning('*')
+      .then(user => user[0]);
+    console.log('======db======', newProfile);
+    return newProfile;
+  }
+};
 module.exports = {
   addUser,
   findAuthUser,
   findSingleUser,
   findSingleProfile,
-  findAllProfile
+  findAllProfile,
+  getLocation,
+  addProfile
 };

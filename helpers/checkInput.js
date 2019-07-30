@@ -28,11 +28,18 @@ const checkInput = inputValue => {
         }
       }
 
-      if (key === 'fullName') {
+      if (key === 'fullname') {
         if (inputValue[key].search(/[^A-Za-z\s]/) !== -1) {
           errors[key] = `${key} can only be alphabetical`;
         }
       }
+
+      if (key === 'location_id') {
+        if (inputValue[key].search(/[^A-Za-z\s]/) === -1) {
+          errors[key] = `${key} can only be a number`;
+        }
+      }
+
       if (key === 'email') {
         if (!validator.isEmail(inputValue[key])) {
           errors[key] = `Invalid ${key}`;

@@ -45,4 +45,32 @@ const getAllUsers = async (req, res, role) => {
   }
 };
 
-module.exports = { createUser, login, getProfile, getAllUsers };
+const createProfile = async (req, res) => {
+  const auth_id = req.decoded.userId;
+  const { fullname, profileimage, location_id } = req.body;
+  try {
+    if (auth_id) {
+      const profile = await userModel.addProfile(
+        {
+          fullname,
+          profileimage,
+          location_id,
+          auth_id
+        },
+        auth_id
+      );
+      // console.log(profile);
+      return requestHelper.success(
+        res,
+        200,
+        'Successfully created profile',
+        profile
+      );
+    }
+    return requestHelper.error(res, 400, 'Not Allowed');
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
+module.exports = { createUser, login, getProfile, getAllUsers, createProfile };

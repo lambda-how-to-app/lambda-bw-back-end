@@ -25,4 +25,12 @@ router
     controller.getAllUsers(req, res, 'guides')
   );
 
+router
+  .route('/user/profile')
+  .post(
+    AuthenticateToken,
+    UserValidation.createProfile,
+    controller.createProfile
+  );
+
 module.exports = router;
