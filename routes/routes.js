@@ -1,5 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/User');
+const Location = require('../controllers/LocationsController');
 const UserValidation = require('../middlewares/UserValidation');
 const AuthenticateToken = require('../auth/AuthenticateToken');
 const IdValidation = require('../middlewares/IdValidation');
@@ -33,4 +34,8 @@ router
     controller.createProfile
   );
 
+router.route('/location').get(Location.getLocations);
+router
+  .route('/location/:id')
+  .get(AuthenticateToken, UserValidation.locationId, Location.getLocationById);
 module.exports = router;
