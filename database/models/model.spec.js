@@ -38,4 +38,14 @@ describe('Test case for user table', () => {
     expect(usersById).toMatchObject(usersById);
     expect(usersByEmail).toMatchObject(usersByEmail);
   });
+  it('should get all users profile by type', async () => {
+    let type1 = 'users';
+    let type2 = 'guides';
+    let allusers = await userModel.findAllProfile();
+    let users = await userModel.findAllProfile(type1);
+    let guides = await userModel.findAllProfile(type2);
+    expect(allusers).toMatchObject(allusers);
+    expect(users).toMatchObject(users);
+    expect(guides).toMatchObject(guides);
+  });
 });
