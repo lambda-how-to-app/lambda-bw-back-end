@@ -22,7 +22,7 @@ const guides = [
   },
   {
     fullname: 'Carola Simons',
-    auth_id: 2,
+    auth_id: 1,
     location_id: 39,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -43,14 +43,14 @@ const guides = [
   },
   {
     fullname: 'Eden Laight',
-    auth_id: 12,
+    auth_id: 11,
     location_id: 13,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Abramo Laugier',
-    auth_id: 2,
+    auth_id: 14,
     location_id: 24,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -64,7 +64,7 @@ const guides = [
   },
   {
     fullname: 'Kania Case',
-    auth_id: 26,
+    auth_id: 15,
     location_id: 26,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -78,7 +78,7 @@ const guides = [
   },
   {
     fullname: 'Robyn Davidowich',
-    auth_id: 39,
+    auth_id: 23,
     location_id: 29,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -91,14 +91,14 @@ const guides = [
   },
   {
     fullname: 'Kristina Spinetti',
-    auth_id: 35,
+    auth_id: 28,
     location_id: 7,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Malissa Phelp',
-    auth_id: 33,
+    auth_id: 29,
     location_id: 7,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -119,7 +119,7 @@ const guides = [
   },
   {
     fullname: 'Kimberly Gossop',
-    auth_id: 39,
+    auth_id: 32,
     location_id: 24,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -154,21 +154,21 @@ const guides = [
   },
   {
     fullname: 'Renie Baughn',
-    auth_id: 2,
+    auth_id: 33,
     location_id: 33,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Reiko Callacher',
-    auth_id: 7,
+    auth_id: 34,
     location_id: 28,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Bibbye Legging',
-    auth_id: 7,
+    auth_id: 35,
     location_id: 17,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'

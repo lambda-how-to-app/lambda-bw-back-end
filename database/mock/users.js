@@ -50,7 +50,7 @@ const users = [
   },
   {
     fullname: 'Rainer McShirie',
-    auth_id: 36,
+    auth_id: 4,
     location_id: 15,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -64,7 +64,7 @@ const users = [
   },
   {
     fullname: 'Maude Drynan',
-    auth_id: 21,
+    auth_id: 16,
     location_id: 2,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
@@ -78,21 +78,21 @@ const users = [
   },
   {
     fullname: 'Karoline Allgood',
-    auth_id: 20,
+    auth_id: 22,
     location_id: 2,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Berti Greguol',
-    auth_id: 36,
+    auth_id: 30,
     location_id: 6,
     profileimage:
       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
   },
   {
     fullname: 'Nikola Petrov',
-    auth_id: 19,
+    auth_id: 37,
     location_id: 3,
     profileimage: null
   },

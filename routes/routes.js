@@ -12,4 +12,17 @@ router
   .route('/profile/:id')
   .get(AuthenticateToken, IdValidation, controller.getProfile);
 
+router.route('/profile').get(AuthenticateToken, controller.getAllUsers);
+
+router
+  .route('/users/profile')
+  .get(AuthenticateToken, (req, res) =>
+    controller.getAllUsers(req, res, 'users')
+  );
+router
+  .route('/guides/profile')
+  .get(AuthenticateToken, (req, res) =>
+    controller.getAllUsers(req, res, 'guides')
+  );
+
 module.exports = router;
