@@ -23,11 +23,19 @@ module.exports = class userValidation {
     const userName = await userModel.findSingleUser({
       username: username
     });
-    if (userEmail[0] || userName[0]) {
+    console.log('=========', userEmail[0]);
+    let existingUser;
+    if (userEmail[0] !== undefined) {
+      existingUser = `email ${email}`;
+    }
+    if (userName[0] !== undefined) {
+      existingUser = `username ${username}`;
+    }
+    if (existingUser) {
       return requestHelper.error(
         res,
         409,
-        'User with email or username already exist'
+        `User with ${existingUser} already exist`
       );
     }
 
