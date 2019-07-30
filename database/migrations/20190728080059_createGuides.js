@@ -6,6 +6,7 @@ exports.up = function(knex) {
     table
       .integer('auth_id')
       .unsigned()
+      .unique()
       .notNullable()
       .references('id')
       .inTable('authenticatedusers')
