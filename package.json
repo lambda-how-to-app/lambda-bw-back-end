@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "cross-env DB_ENV=test jest --watchAll --verbose",
-    "migrate": "knex migrate:latest"
+    "migrate": "knex migrate:rollback && knex seed:run"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/lambda-how-to-app/lambda-bw-back-end#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "helmet": "^3.19.0",
