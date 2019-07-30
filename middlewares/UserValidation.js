@@ -23,7 +23,6 @@ module.exports = class userValidation {
     const userName = await userModel.findSingleUser({
       username: username
     });
-    console.log('=========', userEmail[0]);
     let existingUser;
     if (userEmail[0] !== undefined) {
       existingUser = `email ${email}`;
