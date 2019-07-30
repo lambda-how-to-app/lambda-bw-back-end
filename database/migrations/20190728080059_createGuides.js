@@ -2,10 +2,11 @@ exports.up = function(knex) {
   return knex.schema.createTable('guides', table => {
     table.increments();
     table.string('fullname', 128).notNullable();
-    table.string('phone', 128);
+    table.string('profileimage', 255);
     table
       .integer('auth_id')
       .unsigned()
+      .unique()
       .notNullable()
       .references('id')
       .inTable('authenticatedusers')

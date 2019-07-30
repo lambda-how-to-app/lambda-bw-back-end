@@ -8,7 +8,7 @@ require('dotenv').config();
  * Validates all routes
  * @class Validator
  */
-module.exports = class userValidation {
+module.exports = class UserValidation {
   /**
    * Validates all user details
    * @param {obj} req
@@ -84,5 +84,33 @@ module.exports = class userValidation {
     } catch (err) {
       err;
     }
+  }
+
+  /**
+   *  @description validate party inputs on create and update operations
+   * @memberof UserValidation
+   * @static
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {object} next
+   *
+   * @returns {object} get error message
+   */
+  static createProfile(req, res, next) {
+    const { fullname, location_id } = req.body;
+
+    const check = checkItem({
+      fullname,
+      location_id
+    });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
   }
 };
