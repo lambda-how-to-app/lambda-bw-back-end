@@ -48,4 +48,5 @@ router
     UserValidation.lifehackValidation,
     LifeHack.createLifeHack
   );
+router.route('/lifehack/:id').get(AuthenticateToken, LifeHack.getOneHack);
 module.exports = router;

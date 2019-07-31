@@ -30,10 +30,20 @@ const createLifeHack = async (req, res) => {
 const getLifeHacks = async (req, res) => {
   try {
     const hacks = await guideModel.getAllHacks();
-    requestHelper.success(res, 201, 'LifeHack Created Successfully', hacks);
+    requestHelper.success(res, 201, 'LifeHacks retrieved Successfully', hacks);
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
   }
 };
 
-module.exports = { createLifeHack, getLifeHacks };
+const getOneHack = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const hack = await guideModel.getSingleHack({ id });
+    requestHelper.success(res, 201, 'LifeHack retrieved Successfully', hack);
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
+module.exports = { createLifeHack, getLifeHacks, getOneHack };
