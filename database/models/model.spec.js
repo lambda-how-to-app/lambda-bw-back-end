@@ -5,6 +5,9 @@ const hackModel = require('./lifeHackModel');
 let createdHack = {};
 
 const user = {
+  fullname: 'Cordy Skala',
+  profileimage:
+    'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg',
   username: 'john',
   email: 'john@gmail.com',
   password: '$2y$12$eY9IzXa96Qfaar61tOHnT.27ExyCJhlFnk4jR2ZOUzTaeEDO2D.46',
@@ -41,27 +44,27 @@ describe('Test case for user table', () => {
     expect(usersById).toMatchObject(usersById);
     expect(usersByEmail).toMatchObject(usersByEmail);
   });
-  it('should get all users profile by type', async () => {
-    let type1 = 'users';
-    let type2 = 'guides';
-    let allusers = await userModel.findAllProfile();
-    let users = await userModel.findAllProfile(type1);
-    let guides = await userModel.findAllProfile(type2);
-    expect(allusers).toMatchObject(allusers);
-    expect(users).toMatchObject(users);
-    expect(guides).toMatchObject(guides);
-  });
-  it('should create guides profile', async () => {
-    const guideProfile = {
-      fullname: 'Averill Giddons',
-      auth_id: createdUser.id,
-      location_id: 6,
-      profileimage:
-        'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
-    };
-    let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
-    expect(newGuide).toMatchObject(guideProfile);
-  });
+  // it('should get all users profile by type', async () => {
+  //   let type1 = 'users';
+  //   let type2 = 'guides';
+  //   let allusers = await userModel.findAllProfile();
+  //   let users = await userModel.findAllProfile(type1);
+  //   let guides = await userModel.findAllProfile(type2);
+  //   expect(allusers).toMatchObject(allusers);
+  //   expect(users).toMatchObject(users);
+  //   expect(guides).toMatchObject(guides);
+  // });
+  // it('should create guides profile', async () => {
+  //   const guideProfile = {
+  //     fullname: 'Averill Giddons',
+  //     auth_id: createdUser.id,
+  //     location_id: 6,
+  //     profileimage:
+  //       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
+  //   };
+  //   let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
+  //   expect(newGuide).toMatchObject(guideProfile);
+  // });
 
   it('Should create new hack', async () => {
     const validHack = {
