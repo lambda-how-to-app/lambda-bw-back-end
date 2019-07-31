@@ -108,30 +108,15 @@ describe('Test case for user table', () => {
     const updateHack = await hackModel.updateHack(update, Hack.id);
     expect(updateHack).toMatchObject(update);
   });
-  // it('should not update if input already exist in database', async () => {
-  //   const newHack = {
-  //     guide_auth_id: createdUser.id,
-  //     title: 'Django',
-  //     banner_image:
-  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
-  //   };
-  //   await hackModel.addHack(newHack);
-  //   const validHack = {
-  //     guide_auth_id: createdUser.id,
-  //     title: 'Python',
-  //     banner_image:
-  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
-  //   };
-  //   let Hack2 = await hackModel.addHack(validHack);
-  //   const update = {
-  //     title: 'Django',
-  //     banner_image:
-  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
-  //   };
-  //   const updateHack = await hackModel.updateHack(update, Hack2.id);
-  //   expect(updateHack).toMatchObject({
-  //     status: 409,
-  //     mesage: 'Lifehack with this title already exist'
-  //   });
-  // });
+  it('should delete a selected lifehack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const deletion = await hackModel.deleteHack(Hack.id);
+    expect(deletion).toBeTruthy();
+  });
 });
