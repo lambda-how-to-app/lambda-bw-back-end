@@ -20,6 +20,19 @@ module.exports = class UserValidation {
   static async userInput(req, res, next) {
     const { guide, email, password } = req.body;
     const username = req.body.username.trim();
+
+    const check = checkItem({
+      username,
+      email,
+      password
+    });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        check
+      });
+    }
     const userEmail = await userModel.findSingleUser({ email: email });
     const userName = await userModel.findSingleUser({
       username: username
@@ -39,17 +52,6 @@ module.exports = class UserValidation {
       );
     }
 
-    const check = checkItem({
-      username,
-      email,
-      password
-    });
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        check
-      });
-    }
     const hash = await bcrypt.hash(password, 12);
     const newUser = await userModel.addUser({
       username,
@@ -132,7 +134,7 @@ module.exports = class UserValidation {
   static async lifehackValidation(req, res, next) {
     const { title } = req.body;
     const exists = await hackModel.getSingleHack({ title });
-    if (exists.length !== 0) {
+    if (exists) {
       return requestHelper.error(
         res,
         409,

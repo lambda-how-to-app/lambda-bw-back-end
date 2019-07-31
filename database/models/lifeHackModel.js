@@ -5,9 +5,10 @@ const getAllHacks = async () => {
   return hacks;
 };
 
-const getSingleHack = async filter => {
-  let hack = await db('lifehacks').where(filter);
-  return hack;
+const getSingleHack = filter => {
+  return db('lifehacks')
+    .where(filter)
+    .first();
 };
 
 const addHack = async hack => {
@@ -26,12 +27,12 @@ const addHack = async hack => {
 
 const updateHack = async (changes, id) => {
   try {
-    let update = await db('lifehacks')
-      .where(id)
+    return await db('lifehacks')
+      .where({ id })
       .update(changes)
       .returning('*')
       .then(hack => hack[0]);
-    return update;
+    // return Promise.all([update]).then(results => ([update] = results));
   } catch (err) {
     if (err.routine === '_bt_check_unique') {
       return { status: 409, mesage: 'Lifehack with this title already exist' };

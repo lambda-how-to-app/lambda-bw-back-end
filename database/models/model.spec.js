@@ -93,26 +93,45 @@ describe('Test case for user table', () => {
     expect(hacks).toMatchObject(hacks);
   });
   it('should update an existing hack uniquely', async () => {
-    const update = {
+    const newHack = {
       guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const update = {
       title: 'Java',
       banner_image:
         'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
     };
-    const updateHack = await hackModel.addHack(update);
+    const updateHack = await hackModel.updateHack(update, Hack.id);
     expect(updateHack).toMatchObject(update);
   });
-  it('should not update if input already exist in database', async () => {
-    const update = {
-      guide_auth_id: createdUser.id,
-      title: 'Python',
-      banner_image:
-        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
-    };
-    const updateHack = await hackModel.addHack(update);
-    expect(updateHack).toMatchObject({
-      status: 409,
-      mesage: 'Lifehack with this title already exist'
-    });
-  });
+  // it('should not update if input already exist in database', async () => {
+  //   const newHack = {
+  //     guide_auth_id: createdUser.id,
+  //     title: 'Django',
+  //     banner_image:
+  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+  //   };
+  //   await hackModel.addHack(newHack);
+  //   const validHack = {
+  //     guide_auth_id: createdUser.id,
+  //     title: 'Python',
+  //     banner_image:
+  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+  //   };
+  //   let Hack2 = await hackModel.addHack(validHack);
+  //   const update = {
+  //     title: 'Django',
+  //     banner_image:
+  //       'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+  //   };
+  //   const updateHack = await hackModel.updateHack(update, Hack2.id);
+  //   expect(updateHack).toMatchObject({
+  //     status: 409,
+  //     mesage: 'Lifehack with this title already exist'
+  //   });
+  // });
 });

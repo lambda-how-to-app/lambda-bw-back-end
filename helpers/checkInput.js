@@ -6,7 +6,8 @@ const checkInput = inputValue => {
     if (
       !inputValue[key] ||
       validator.isEmpty(inputValue[key]) ||
-      inputValue[key].trim() === ''
+      inputValue[key].trim() === '' ||
+      inputValue[key] === ''
     ) {
       errors[key] = `${key} field can not be blank`;
     } else {
