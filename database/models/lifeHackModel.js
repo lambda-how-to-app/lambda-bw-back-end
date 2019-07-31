@@ -17,11 +17,26 @@ const addHack = async hack => {
       .returning('*')
       .then(hack => hack[0]);
     return newhack;
-  } catch (error) {
-    if (error.routine === '_bt_check_unique') {
+  } catch (err) {
+    if (err.routine === '_bt_check_unique') {
       return { status: 409, mesage: 'Lifehack with this title already exist' };
     }
   }
 };
 
-module.exports = { getAllHacks, addHack, getSingleHack };
+const updateHack = async (changes, id) => {
+  try {
+    let update = await db('lifehacks')
+      .where(id)
+      .update(changes)
+      .returning('*')
+      .then(hack => hack[0]);
+    return update;
+  } catch (err) {
+    if (err.routine === '_bt_check_unique') {
+      return { status: 409, mesage: 'Lifehack with this title already exist' };
+    }
+  }
+};
+
+module.exports = { getAllHacks, addHack, getSingleHack, updateHack };

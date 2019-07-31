@@ -92,4 +92,27 @@ describe('Test case for user table', () => {
     let hacks = await hackModel.getAllHacks();
     expect(hacks).toMatchObject(hacks);
   });
+  it('should update an existing hack uniquely', async () => {
+    const update = {
+      guide_auth_id: createdUser.id,
+      title: 'Java',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    const updateHack = await hackModel.addHack(update);
+    expect(updateHack).toMatchObject(update);
+  });
+  it('should not update if input already exist in database', async () => {
+    const update = {
+      guide_auth_id: createdUser.id,
+      title: 'Python',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    const updateHack = await hackModel.addHack(update);
+    expect(updateHack).toMatchObject({
+      status: 409,
+      mesage: 'Lifehack with this title already exist'
+    });
+  });
 });
