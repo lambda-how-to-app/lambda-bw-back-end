@@ -47,6 +47,24 @@ const getAUser = async (req, res) => {
   }
 };
 
+const getByType = async (req, res, role) => {
+  try {
+    let type = role === true ? 'guides' : 'users';
+    if (role) {
+      const users = await userModel.findSingleUser({ guide: role });
+      return requestHelper.success(
+        res,
+        200,
+        `Successfully retrieved all ${type}`,
+        users
+      );
+    }
+    return requestHelper.error(res, 400, 'User type does not exist');
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
 // const getProfile = async (req, res) => {
 //   try {
 //     const userProfile = req.profile;
@@ -105,5 +123,6 @@ module.exports = {
   createUser,
   login,
   getAllUsers,
-  getAUser
+  getAUser,
+  getByType
 };

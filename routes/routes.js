@@ -15,6 +15,11 @@ router.post('/auth/login', UserValidation.userLogin, controller.login);
 router.route('/users').get(AuthenticateToken, controller.getAllUsers);
 
 router.route('/users/:id').get(AuthenticateToken, controller.getAUser);
+
+router
+  .route('/guides/profile')
+  .get(AuthenticateToken, (req, res) => controller.getByType(req, res, true));
+
 // router
 //   .route('/profile/:id')
 //   .get(AuthenticateToken, IdValidation, controller.getProfile);

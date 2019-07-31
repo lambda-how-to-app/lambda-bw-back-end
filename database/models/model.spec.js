@@ -40,9 +40,13 @@ describe('Test case for user table', () => {
     let usersByEmail = await userModel.findSingleUser({
       email: createdUser.email
     });
+    let usersByRole = await userModel.findSingleUser({
+      guide: createdUser.guide
+    });
     expect(usersByUsername).toMatchObject(usersByUsername);
     expect(usersById).toMatchObject(usersById);
     expect(usersByEmail).toMatchObject(usersByEmail);
+    expect(usersByRole).toMatchObject(usersByRole);
   });
   // it('should get all users profile by type', async () => {
   //   let type1 = 'users';
