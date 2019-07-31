@@ -127,4 +127,18 @@ module.exports = class UserValidation {
     }
     return next();
   }
+
+  static lifehackValidation(req, res, next) {
+    const { title } = req.body;
+
+    const check = checkItem({ title });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
+  }
 };

@@ -13,7 +13,7 @@ const checkInput = inputValue => {
       /*
        *signup input Validation
        */
-      if (key === 'username' || key === 'type') {
+      if (key === 'username' || key === 'type' || key === 'title') {
         if (!validator.isLength(inputValue[key], { min: 3, max: 50 })) {
           errors[key] = `${key} must be between 3 to 50 characters`;
         }
