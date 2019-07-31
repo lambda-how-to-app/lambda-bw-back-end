@@ -151,4 +151,18 @@ module.exports = class UserValidation {
     }
     return next();
   }
+
+  static async stepsValidation(req, res, next) {
+    const { steps } = req.body;
+
+    const check = checkItem({ steps });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
+  }
 };

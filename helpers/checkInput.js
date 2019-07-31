@@ -19,6 +19,11 @@ const checkInput = inputValue => {
           errors[key] = `${key} must be between 3 to 50 characters`;
         }
       }
+      if (key === 'steps') {
+        if (!validator.isLength(inputValue[key], { min: 3, max: 100 })) {
+          errors[key] = `${key} must be between 3 to 100 characters`;
+        }
+      }
       if (key === 'phonenumber') {
         if (
           inputValue[key].match(
