@@ -2,13 +2,6 @@ const db = require('../dbConfig');
 const userModel = require('./model');
 const hackModel = require('./lifeHackModel');
 
-// const duplicateHack = {
-//   guide_id: 12,
-//   title: 'Legal Assistant',
-//   banner_image:
-//     'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
-// };
-
 let createdHack = {};
 
 const user = {
@@ -19,7 +12,6 @@ const user = {
 };
 
 let createdUser = {};
-let newGuide = {};
 
 beforeAll(async () => {
   await db.raw(
@@ -72,10 +64,8 @@ describe('Test case for user table', () => {
   });
 
   it('Should create new hack', async () => {
-    let guide = await db('guides');
-    expect(guide).toMatchObject(guide);
     const validHack = {
-      guide_id: guide[0].id,
+      guide_auth_id: createdUser.id,
       title: 'Python',
       banner_image:
         'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'

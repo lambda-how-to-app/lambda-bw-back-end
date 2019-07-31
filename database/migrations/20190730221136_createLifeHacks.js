@@ -8,11 +8,11 @@ exports.up = function(knex) {
         .unique();
       table.string('banner_image', 255);
       table
-        .integer('guide_id')
+        .integer('guide_auth_id')
         .unsigned()
         .notNullable()
         .references('id')
-        .inTable('guides')
+        .inTable('authenticatedusers')
         .onUpdate('CASCADE')
         .onDelete('CASCADE');
       table.timestamps(true, true);
