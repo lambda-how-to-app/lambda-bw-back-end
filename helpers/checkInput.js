@@ -6,14 +6,15 @@ const checkInput = inputValue => {
     if (
       !inputValue[key] ||
       validator.isEmpty(inputValue[key]) ||
-      inputValue[key].trim() === ''
+      inputValue[key].trim() === '' ||
+      inputValue[key] === ''
     ) {
       errors[key] = `${key} field can not be blank`;
     } else {
       /*
        *signup input Validation
        */
-      if (key === 'username' || key === 'type') {
+      if (key === 'username' || key === 'type' || key === 'title') {
         if (!validator.isLength(inputValue[key], { min: 3, max: 50 })) {
           errors[key] = `${key} must be between 3 to 50 characters`;
         }

@@ -1,5 +1,8 @@
 const db = require('../dbConfig');
 const userModel = require('./model');
+const hackModel = require('./lifeHackModel');
+
+let createdHack = {};
 
 const user = {
   username: 'john',
@@ -12,7 +15,7 @@ let createdUser = {};
 
 beforeAll(async () => {
   await db.raw(
-    'TRUNCATE TABLE authenticatedusers, users, guides, locations CASCADE'
+    'TRUNCATE TABLE authenticatedusers,lifehacks, hacksteps CASCADE'
   );
 });
 
@@ -47,5 +50,73 @@ describe('Test case for user table', () => {
     expect(allusers).toMatchObject(allusers);
     expect(users).toMatchObject(users);
     expect(guides).toMatchObject(guides);
+  });
+  it('should create guides profile', async () => {
+    const guideProfile = {
+      fullname: 'Averill Giddons',
+      auth_id: createdUser.id,
+      location_id: 6,
+      profileimage:
+        'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
+    };
+    let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
+    expect(newGuide).toMatchObject(guideProfile);
+  });
+
+  it('Should create new hack', async () => {
+    const validHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Python',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    createdHack = await hackModel.addHack(validHack);
+    expect(createdHack).toMatchObject(validHack);
+  });
+
+  it('Should not create hack if title already exists in database', async () => {
+    const validHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Python',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    createdHack = await hackModel.addHack(validHack);
+    expect(createdHack).toEqual({
+      status: 409,
+      mesage: 'Lifehack with this title already exist'
+    });
+  });
+
+  it('should return all lifehacks', async () => {
+    let hacks = await hackModel.getAllHacks();
+    expect(hacks).toMatchObject(hacks);
+  });
+  it('should update an existing hack uniquely', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const update = {
+      title: 'Java',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    const updateHack = await hackModel.updateHack(update, Hack.id);
+    expect(updateHack).toMatchObject(update);
+  });
+  it('should delete a selected lifehack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const deletion = await hackModel.deleteHack(Hack.id);
+    expect(deletion).toBeTruthy();
   });
 });

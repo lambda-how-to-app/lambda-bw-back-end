@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const checkItem = require('../helpers/checkInput');
 const requestHelper = require('../helpers/requestHelper');
 const userModel = require('../database/models/model');
+const hackModel = require('../database/models/lifeHackModel');
 require('dotenv').config();
 
 /**
@@ -19,6 +20,19 @@ module.exports = class UserValidation {
   static async userInput(req, res, next) {
     const { guide, email, password } = req.body;
     const username = req.body.username.trim();
+
+    const check = checkItem({
+      username,
+      email,
+      password
+    });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        check
+      });
+    }
     const userEmail = await userModel.findSingleUser({ email: email });
     const userName = await userModel.findSingleUser({
       username: username
@@ -38,17 +52,6 @@ module.exports = class UserValidation {
       );
     }
 
-    const check = checkItem({
-      username,
-      email,
-      password
-    });
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        check
-      });
-    }
     const hash = await bcrypt.hash(password, 12);
     const newUser = await userModel.addUser({
       username,
@@ -118,6 +121,27 @@ module.exports = class UserValidation {
     const id = req.params.id;
 
     const check = checkItem({ id });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
+  }
+
+  static async lifehackValidation(req, res, next) {
+    const { title } = req.body;
+    const exists = await hackModel.getSingleHack({ title });
+    if (exists) {
+      return requestHelper.error(
+        res,
+        409,
+        'Lifehack with this title already exist'
+      );
+    }
+    const check = checkItem({ title });
 
     if (Object.keys(check).length > 0) {
       return res.status(400).json({

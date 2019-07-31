@@ -1,6 +1,7 @@
 const express = require('express');
 const controller = require('../controllers/User');
 const Location = require('../controllers/LocationsController');
+const LifeHack = require('../controllers/LifehacksControllers');
 const UserValidation = require('../middlewares/UserValidation');
 const AuthenticateToken = require('../auth/AuthenticateToken');
 const IdValidation = require('../middlewares/IdValidation');
@@ -38,4 +39,22 @@ router.route('/location').get(Location.getLocations);
 router
   .route('/location/:id')
   .get(AuthenticateToken, UserValidation.locationId, Location.getLocationById);
+
+router
+  .route('/lifehack')
+  .get(AuthenticateToken, LifeHack.getLifeHacks)
+  .post(
+    AuthenticateToken,
+    UserValidation.lifehackValidation,
+    LifeHack.createLifeHack
+  );
+router
+  .route('/lifehack/:id')
+  .get(AuthenticateToken, LifeHack.getOneHack)
+  .put(
+    AuthenticateToken,
+    UserValidation.lifehackValidation,
+    LifeHack.updateHack
+  )
+  .delete(AuthenticateToken, LifeHack.deleteHack);
 module.exports = router;

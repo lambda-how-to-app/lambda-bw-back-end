@@ -16,6 +16,6 @@ const createToken = (res, statusCode, message, result) => {
     ...user,
     token
   };
-  requestHelper.success(res, statusCode, message, logInfo);
+  return requestHelper.success(res, statusCode, message, logInfo);
 };
 module.exports = createToken;
