@@ -116,7 +116,7 @@ const deleteHack = async (req, res) => {
 
     await guideModel.deleteHack(id);
 
-    return requestHelper.success(res, 200, 'Lifehack Updated Successfully');
+    return requestHelper.success(res, 200, 'Lifehack deleted Successfully');
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
   }
