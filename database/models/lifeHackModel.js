@@ -45,10 +45,6 @@ const deleteHack = async id => {
     .del();
 };
 
-// select hacksteps.steps, lifehacks.title from lifehacks
-// join hacksteps on hacksteps.hack_id = lifehacks.id
-// where lifehacks.id = 10 order by hacksteps.id
-
 const getStepsForSingleHack = async id => {
   return await db
     .select('hacksteps.steps', 'hacksteps.id', 'lifehacks.title')

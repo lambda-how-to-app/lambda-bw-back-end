@@ -17,38 +17,14 @@ router.route('/users').get(AuthenticateToken, controller.getAllUsers);
 router.route('/users/:id').get(AuthenticateToken, controller.getAUser);
 
 router
-  .route('/guides/profile')
+  .route('/profile/guides')
   .get(AuthenticateToken, (req, res) => controller.getByType(req, res, true));
 
-// router
-//   .route('/profile/:id')
-//   .get(AuthenticateToken, IdValidation, controller.getProfile);
-
-// router.route('/profile').get(AuthenticateToken, controller.getAllUsers);
-
-// router
-//   .route('/users/profile')
-//   .get(AuthenticateToken, (req, res) =>
-//     controller.getAllUsers(req, res, 'users')
-//   );
-// router
-//   .route('/guides/profile')
-//   .get(AuthenticateToken, (req, res) =>
-//     controller.getAllUsers(req, res, 'guides')
-//   );
-
-// router
-//   .route('/user/profile')
-//   .post(
-//     AuthenticateToken,
-//     UserValidation.createProfile,
-//     controller.createProfile
-//   );
-
-// router.route('/location').get(Location.getLocations);
-// router
-//   .route('/location/:id')
-//   .get(AuthenticateToken, UserValidation.locationId, Location.getLocationById);
+router
+  .route('/profile/users')
+  .get(AuthenticateToken, (req, res) =>
+    controller.getByType(req, res, 'users')
+  );
 
 router
   .route('/lifehack')

@@ -50,7 +50,7 @@ const getAUser = async (req, res) => {
 const getByType = async (req, res, role) => {
   try {
     let type = role === true ? 'guides' : 'users';
-    if (role) {
+    if (role === true) {
       const users = await userModel.findSingleUser({ guide: role });
       return requestHelper.success(
         res,
@@ -59,65 +59,18 @@ const getByType = async (req, res, role) => {
         users
       );
     }
-    return requestHelper.error(res, 400, 'User type does not exist');
+    const users = await userModel.findAuthUser();
+    let regularUsers = await users.filter(user => user.guide !== true);
+    return requestHelper.success(
+      res,
+      200,
+      `Successfully retrieved all ${type}`,
+      regularUsers
+    );
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
   }
 };
-
-// const getProfile = async (req, res) => {
-//   try {
-//     const userProfile = req.profile;
-//     requestHelper.success(res, 200, 'Successfully retrieved user', userProfile);
-//   } catch (err) {
-//     return requestHelper.error(res, 500, 'server error');
-//   }
-// };
-// const getAllUsers = async (req, res, role) => {
-//   try {
-//     if (role) {
-//       const users = await userModel.findAllProfile(role);
-//       return requestHelper.success(
-//         res,
-//         200,
-//         'Successfully retrieved all users',
-//         users
-//       );
-//     }
-//     const users = await userModel.findAllProfile();
-//     requestHelper.success(res, 200, 'Successfully retrieved all users', users);
-//   } catch (err) {
-//     return requestHelper.error(res, 500, 'server error');
-//   }
-// };
-
-// const createProfile = async (req, res) => {
-//   const auth_id = req.decoded.userId;
-//   const { fullname, profileimage, location_id } = req.body;
-//   try {
-//     if (auth_id) {
-//       const profile = await userModel.addProfile(
-//         {
-//           fullname,
-//           profileimage,
-//           location_id,
-//           auth_id
-//         },
-//         auth_id
-//       );
-//       // console.log(profile);
-//       return requestHelper.success(
-//         res,
-//         200,
-//         'Successfully created profile',
-//         profile
-//       );
-//     }
-//     return requestHelper.error(res, 400, 'Not Allowed');
-//   } catch (err) {
-//     return requestHelper.error(res, 500, 'server error');
-//   }
-// };
 
 module.exports = {
   createUser,
