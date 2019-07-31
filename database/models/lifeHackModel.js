@@ -40,4 +40,16 @@ const updateHack = async (changes, id) => {
   }
 };
 
-module.exports = { getAllHacks, addHack, getSingleHack, updateHack };
+const deleteHack = async id => {
+  return await db('lifehacks')
+    .where({ id })
+    .del();
+};
+
+module.exports = {
+  getAllHacks,
+  addHack,
+  getSingleHack,
+  updateHack,
+  deleteHack
+};

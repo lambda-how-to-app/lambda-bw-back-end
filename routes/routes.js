@@ -55,5 +55,6 @@ router
     AuthenticateToken,
     UserValidation.lifehackValidation,
     LifeHack.updateHack
-  );
+  )
+  .delete(AuthenticateToken, LifeHack.deleteHack);
 module.exports = router;

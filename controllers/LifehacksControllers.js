@@ -40,6 +40,13 @@ const getOneHack = async (req, res) => {
   const id = req.params.id;
   try {
     const hack = await guideModel.getSingleHack({ id });
+    if (!hack) {
+      return requestHelper.error(
+        res,
+        404,
+        'Life hack with provided id does not exist'
+      );
+    }
     requestHelper.success(res, 200, 'LifeHack retrieved Successfully', hack);
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
@@ -86,4 +93,38 @@ const updateHack = async (req, res) => {
     return requestHelper.error(res, 500, 'server error');
   }
 };
-module.exports = { createLifeHack, getLifeHacks, getOneHack, updateHack };
+
+const deleteHack = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const hackToDelete = await guideModel.getSingleHack({ id });
+
+    if (!hackToDelete) {
+      return requestHelper.error(
+        res,
+        404,
+        'Life hack with provided id does not exist'
+      );
+    }
+
+    const { userId } = req.decoded;
+
+    if (userId !== hackToDelete.guide_auth_id) {
+      return requestHelper.error(res, 400, 'You Are Not Authorized');
+    }
+
+    const hackDeletion = await guideModel.deleteHack(id);
+
+    return requestHelper.success(res, 200, 'Lifehack Updated Successfully');
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+module.exports = {
+  createLifeHack,
+  getLifeHacks,
+  getOneHack,
+  updateHack,
+  deleteHack
+};
