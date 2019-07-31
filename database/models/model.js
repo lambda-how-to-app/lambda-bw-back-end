@@ -27,11 +27,12 @@ const findSingleUser = async filter => {
  * @param {*} user
  * @returns user object
  */
-const addUser = user => {
-  return db('authenticatedusers')
+const addUser = async user => {
+  let newuser = await db('authenticatedusers')
     .insert(user)
     .returning('*')
     .then(user => user[0]);
+  return newuser;
 };
 // select users.fullname, users.profileimage, locations.locations from users
 // join locations on locations.id = location_id where users.id = 2
@@ -71,6 +72,7 @@ const findSingleProfile = async id => {
     return user;
   }
   if (search[0].guide === true) {
+    console.log(guide);
     return guide;
   }
 };

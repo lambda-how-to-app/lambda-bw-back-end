@@ -1,5 +1,15 @@
 const db = require('../dbConfig');
 const userModel = require('./model');
+const hackModel = require('./lifeHackModel');
+
+// const duplicateHack = {
+//   guide_id: 12,
+//   title: 'Legal Assistant',
+//   banner_image:
+//     'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+// };
+
+let createdHack = {};
 
 const user = {
   username: 'john',
@@ -9,10 +19,11 @@ const user = {
 };
 
 let createdUser = {};
+let newGuide = {};
 
 beforeAll(async () => {
   await db.raw(
-    'TRUNCATE TABLE authenticatedusers, users, guides, locations CASCADE'
+    'TRUNCATE TABLE authenticatedusers,lifehacks, hacksteps CASCADE'
   );
 });
 
@@ -47,5 +58,34 @@ describe('Test case for user table', () => {
     expect(allusers).toMatchObject(allusers);
     expect(users).toMatchObject(users);
     expect(guides).toMatchObject(guides);
+  });
+  it('should create guides profile', async () => {
+    const guideProfile = {
+      fullname: 'Averill Giddons',
+      auth_id: createdUser.id,
+      location_id: 6,
+      profileimage:
+        'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
+    };
+    let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
+    expect(newGuide).toMatchObject(guideProfile);
+  });
+
+  it('Should create new hack', async () => {
+    let guide = await db('guides');
+    expect(guide).toMatchObject(guide);
+    const validHack = {
+      guide_id: guide[0].id,
+      title: 'Python',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    createdHack = await hackModel.addHack(validHack);
+    expect(createdHack).toMatchObject(validHack);
+  });
+
+  it('should return all lifehacks', async () => {
+    let hacks = await hackModel.getAllHacks();
+    expect(hacks).toMatchObject(hacks);
   });
 });
