@@ -114,7 +114,7 @@ const deleteHack = async (req, res) => {
       return requestHelper.error(res, 400, 'You Are Not Authorized');
     }
 
-    const hackDeletion = await guideModel.deleteHack(id);
+    await guideModel.deleteHack(id);
 
     return requestHelper.success(res, 200, 'Lifehack Updated Successfully');
   } catch (err) {
