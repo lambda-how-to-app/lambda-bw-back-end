@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const checkItem = require('../helpers/checkInput');
 const requestHelper = require('../helpers/requestHelper');
 const userModel = require('../database/models/model');
+const hackModel = require('../database/models/lifeHackModel');
 require('dotenv').config();
 
 /**
@@ -128,9 +129,16 @@ module.exports = class UserValidation {
     return next();
   }
 
-  static lifehackValidation(req, res, next) {
+  static async lifehackValidation(req, res, next) {
     const { title } = req.body;
-
+    const exists = await hackModel.getSingleHack({ title });
+    if (exists.length !== 0) {
+      return requestHelper.error(
+        res,
+        409,
+        'Lifehack with this title already exist'
+      );
+    }
     const check = checkItem({ title });
 
     if (Object.keys(check).length > 0) {

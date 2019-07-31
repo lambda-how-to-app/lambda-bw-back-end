@@ -5,12 +5,23 @@ const getAllHacks = async () => {
   return hacks;
 };
 
-const addHack = async hack => {
-  let newhack = await db('lifehacks')
-    .insert(hack)
-    .returning('*')
-    .then(hack => hack[0]);
-  return newhack;
+const getSingleHack = async filter => {
+  let hack = await db('lifehacks').where(filter);
+  return hack;
 };
 
-module.exports = { getAllHacks, addHack };
+const addHack = async hack => {
+  try {
+    let newhack = await db('lifehacks')
+      .insert(hack)
+      .returning('*')
+      .then(hack => hack[0]);
+    return newhack;
+  } catch (error) {
+    if (error.routine === '_bt_check_unique') {
+      return { status: 409, mesage: 'Lifehack with this title already exist' };
+    }
+  }
+};
+
+module.exports = { getAllHacks, addHack, getSingleHack };

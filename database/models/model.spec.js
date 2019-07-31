@@ -74,6 +74,20 @@ describe('Test case for user table', () => {
     expect(createdHack).toMatchObject(validHack);
   });
 
+  it('Should not create hack if title already exists in database', async () => {
+    const validHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Python',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    createdHack = await hackModel.addHack(validHack);
+    expect(createdHack).toEqual({
+      status: 409,
+      mesage: 'Lifehack with this title already exist'
+    });
+  });
+
   it('should return all lifehacks', async () => {
     let hacks = await hackModel.getAllHacks();
     expect(hacks).toMatchObject(hacks);
