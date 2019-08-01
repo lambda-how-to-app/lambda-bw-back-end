@@ -39,7 +39,7 @@ const createStep = async (req, res) => {
 
     return requestHelper.success(
       res,
-      200,
+      201,
       'Step Added Successfully To Lifehack',
       addedStep
     );

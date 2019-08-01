@@ -23,14 +23,12 @@ const AuthenticateToken = (req, res, next) => {
     // verifies token and checks if expired or invalid
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
-        console.log('this============= ATHU TOKEN 1 =======================');
         requestHelper.error(res, 401, 'Authentication failed');
       }
       req.decoded = decoded;
       next();
     });
   } else {
-    console.log('this============= ATHU TOKEN 2 =======================');
     requestHelper.error(res, 403, 'Access denied. You are not logged in');
   }
 };

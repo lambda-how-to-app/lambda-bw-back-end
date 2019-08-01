@@ -25,10 +25,8 @@ module.exports = class UserValidation {
       username,
       email,
       password,
-      fullname,
-      profileimage
+      fullname
     });
-
     if (Object.keys(check).length > 0) {
       return res.status(400).json({
         statusCode: 400,
@@ -70,69 +68,38 @@ module.exports = class UserValidation {
 
   static async userLogin(req, res, next) {
     const { username, password, email } = req.body;
+    const input = username ? username : email;
     try {
-      let check;
-      if (email) {
-        check = await userModel.findSingleUser({ email });
+      const check = checkItem({
+        input,
+        password
+      });
+      if (Object.keys(check).length > 0) {
+        return res.status(400).json({
+          statusCode: 400,
+          check
+        });
       }
-      if (username) {
-        check = await userModel.findSingleUser({ username });
+      let validate = email
+        ? await userModel.findSingleUser({ email })
+        : await userModel.findSingleUser({ username });
+
+      if (validate.length > 0 && validate[0].password) {
+        const checkPassword = await bcrypt.compareSync(
+          password,
+          validate[0].password
+        );
+        if (validate[0] && checkPassword) {
+          // eslint-disable-next-line require-atomic-updates
+          req.checked = validate[0];
+          next();
+        }
       }
-      const checkPassword = await bcrypt.compareSync(
-        password,
-        check[0].password
-      );
-      if (check[0] && checkPassword) {
-        // eslint-disable-next-line require-atomic-updates
-        req.checked = check[0];
-        next();
-      }
+
       return requestHelper.error(res, 400, 'wrong credentials');
     } catch (err) {
       err;
     }
-  }
-
-  /**
-   *  @description validate party inputs on create and update operations
-   * @memberof UserValidation
-   * @static
-   *
-   * @param {object} req
-   * @param {object} res
-   * @param {object} next
-   *
-   * @returns {object} get error message
-   */
-  static createProfile(req, res, next) {
-    const { fullname, location_id } = req.body;
-
-    const check = checkItem({
-      fullname,
-      location_id
-    });
-
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        data: [check]
-      });
-    }
-    return next();
-  }
-
-  static locationId(req, res, next) {
-    const id = req.params.id;
-
-    const check = checkItem({ id });
-
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        data: [check]
-      });
-    }
-    return next();
   }
 
   static async lifehackValidation(req, res, next) {

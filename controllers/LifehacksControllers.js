@@ -30,7 +30,7 @@ const createLifeHack = async (req, res) => {
 const getLifeHacks = async (req, res) => {
   try {
     const hacks = await guideModel.getAllHacks();
-    requestHelper.success(res, 201, 'LifeHacks retrieved Successfully', hacks);
+    requestHelper.success(res, 200, 'LifeHacks retrieved Successfully', hacks);
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
   }
