@@ -57,6 +57,6 @@ router
 router
   .route('/steps/:id')
   .get(AuthenticateToken, HackSteps.getStepById)
-  .put(AuthenticateToken, HackSteps.updateStep)
+  .put(AuthenticateToken, UserValidation.stepsValidation, HackSteps.updateStep)
   .delete(AuthenticateToken, HackSteps.deleteStep);
 module.exports = router;
