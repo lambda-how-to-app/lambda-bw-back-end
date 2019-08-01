@@ -51,3 +51,9 @@ Table locations {
 id int [primary key]
 country varchar
 }
+
+Knex.Schema.createTable('tableName', function(table) {
+table.unique(['LoginID', 'Email']);
+table.unique('LoginID');
+table.unique('Email');
+});
