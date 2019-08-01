@@ -1,21 +1,19 @@
 const app = require('../../server/server');
 const request = require('supertest')(app);
-const db = require('../../database/dbConfig');
 const mock = require('../../database/mock/auth.mock');
 const hacks = require('../../database/mock/lifehack.mock');
 const baseUrl = '/api/v1';
 
+// eslint-disable-next-line no-unused-vars
+let steps = {};
 let user1Token = { data: [] };
 let hack1 = {};
 let hack2 = {};
-let step = {};
+
 let user2Token = { data: [] };
 let user3Token = { data: [] };
 let emptyToken = [];
-// jest.setTimeout(30000);
-// beforeAll(async () => {
-//   await db.raw('TRUNCATE TABLE authenticatedusers CASCADE');
-// });
+
 describe('User Controller routes', () => {
   it('should signup user as guide', async () => {
     const res = await request
@@ -264,7 +262,7 @@ describe('User Controller routes', () => {
       .post(`${baseUrl}/step/${hack2.id}/lifehack`)
       .set('Authorization', user3Token.data)
       .send(hacks.validStep1);
-    step = res.body;
+    steps = res.body;
     expect(res.statusCode).toBe(201);
     expect(res.body.message).toBe('Step Added Successfully To Lifehack');
   });
