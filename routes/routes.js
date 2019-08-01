@@ -44,6 +44,7 @@ router
   )
   .delete(AuthenticateToken, LifeHack.deleteHack);
 
+router.route('/steps').get(AuthenticateToken, HackSteps.getSteps);
 router
   .route('/step/:id/lifehack')
   .get(AuthenticateToken, HackSteps.getStepsForASingleHack)
@@ -52,4 +53,10 @@ router
     UserValidation.stepsValidation,
     HackSteps.createStep
   );
+
+router
+  .route('/steps/:id')
+  .get(AuthenticateToken, HackSteps.getStepById)
+  .put(AuthenticateToken, HackSteps.updateStep)
+  .delete(AuthenticateToken, HackSteps.deleteStep);
 module.exports = router;

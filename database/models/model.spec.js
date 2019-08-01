@@ -126,4 +126,90 @@ describe('Test case for user table', () => {
     const deletion = await hackModel.deleteHack(Hack.id);
     expect(deletion).toBeTruthy();
   });
+  it('should create step for an existing hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'Any thing yo wanna say'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    expect(addedStep).toMatchObject({ ...newStep, hack_id: Hack.id });
+  });
+  it('should get all steps for an existing life hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Ruby',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install ruby on rails'
+    };
+    await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    let steps = await hackModel.getStepsForSingleHack(Hack.id);
+    expect(steps).toMatchObject(steps);
+  });
+  it('should update a step for an existing life hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Flask',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install flask for python'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    const stepUpdate = {
+      steps: 'Update installed ruby on rails'
+    };
+    let steps = await hackModel.updateStep(stepUpdate, addedStep.id);
+    expect(steps).toMatchObject(stepUpdate);
+  });
+
+  it('should delete a selected step', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'PHP',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install WAMP or MAMP'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    const deletion = await hackModel.deleteStep(addedStep.id);
+    expect(deletion).toBeTruthy();
+  });
+  it('should get all steps', async () => {
+    let steps = await hackModel.getAllSteps();
+    expect(steps).toMatchObject(steps);
+  });
+  it('should get a single step', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Baking Cake',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const newStep = {
+      steps: 'install WAMP or MAMP'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    let step = await hackModel.getSingleStep({ id: addedStep.id });
+    expect(step).toMatchObject(step);
+  });
 });

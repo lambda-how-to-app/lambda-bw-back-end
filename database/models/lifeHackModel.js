@@ -60,6 +60,35 @@ const addStep = async step => {
     .then(newStep => newStep[0]);
 };
 
+const updateStep = async (changes, id) => {
+  try {
+    return await db('hacksteps')
+      .where({ id })
+      .update(changes)
+      .returning('*')
+      .then(hack => hack[0]);
+  } catch (err) {
+    if (err.routine === '_bt_check_unique') {
+      return { status: 409, mesage: 'Lifehack with this title already exist' };
+    }
+  }
+};
+
+const deleteStep = async id => {
+  return await db('hacksteps')
+    .where({ id })
+    .del();
+};
+const getAllSteps = async () => {
+  return db('hacksteps');
+};
+
+const getSingleStep = async filter => {
+  return db('hacksteps')
+    .where(filter)
+    .first();
+};
+
 module.exports = {
   getAllHacks,
   addHack,
@@ -67,5 +96,9 @@ module.exports = {
   updateHack,
   deleteHack,
   getStepsForSingleHack,
-  addStep
+  addStep,
+  updateStep,
+  deleteStep,
+  getAllSteps,
+  getSingleStep
 };
