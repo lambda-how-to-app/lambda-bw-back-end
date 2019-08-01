@@ -15,6 +15,14 @@ module.exports = {
     profileimage: 'mybro.png',
     guide: false
   },
+  validInput3: {
+    fullname: 'frodo',
+    username: 'Bagins',
+    email: 'frod@yahoo.com',
+    password: 'shire prince',
+    profileimage: 'mybro.png',
+    guide: true
+  },
   existingUsername: {
     fullname: 'Dave',
     username: 'Owen',
@@ -46,7 +54,7 @@ module.exports = {
   improperData: {
     fullname: '23BruceBanner',
     username: 'J',
-    email: 'bannery',
+    email: 'banner',
     password: 'bruce',
     profileimage: 'Mike'
   },
@@ -61,6 +69,7 @@ module.exports = {
   },
   userOneLogin: { email: 'banner@yahoo.com', password: 'bruce banner' },
   userTwoLogin: { email: 'mk@yahoo.com', password: 'ulor mike' },
+  guideLogin: { email: 'frod@yahoo.com', password: 'shire prince' },
   adminLogin: { email: 'admin@andela.com', password: '12345' },
   emptyLoginData: { email: '', password: '' },
   noEmail: { email: '', password: 'bruce banner' },

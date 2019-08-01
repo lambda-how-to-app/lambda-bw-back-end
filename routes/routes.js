@@ -1,11 +1,9 @@
 const express = require('express');
 const controller = require('../controllers/User');
-// const Location = require('../controllers/LocationsController');
 const LifeHack = require('../controllers/LifehacksControllers');
 const HackSteps = require('../controllers/StepsControllers');
 const UserValidation = require('../middlewares/UserValidation');
 const AuthenticateToken = require('../auth/AuthenticateToken');
-// const IdValidation = require('../middlewares/IdValidation');
 
 const router = express.Router();
 

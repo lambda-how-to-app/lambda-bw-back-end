@@ -24,25 +24,10 @@ const checkInput = inputValue => {
           errors[key] = `${key} must be between 3 to 100 characters`;
         }
       }
-      if (key === 'phonenumber') {
-        if (
-          inputValue[key].match(
-            /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/
-          ) === null
-        ) {
-          errors[key] = `Invalid ${key}`;
-        }
-      }
 
       if (key === 'fullname') {
         if (inputValue[key].search(/[^A-Za-z\s]/) !== -1) {
           errors[key] = `${key} can only be alphabetical`;
-        }
-      }
-
-      if (key === 'location_id') {
-        if (inputValue[key].search(/[^A-Za-z\s]/) === -1) {
-          errors[key] = `${key} can only be a number`;
         }
       }
 
