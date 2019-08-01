@@ -25,10 +25,8 @@ module.exports = class UserValidation {
       username,
       email,
       password,
-      fullname,
-      profileimage
+      fullname
     });
-
     if (Object.keys(check).length > 0) {
       return res.status(400).json({
         statusCode: 400,
@@ -91,48 +89,6 @@ module.exports = class UserValidation {
     } catch (err) {
       err;
     }
-  }
-
-  /**
-   *  @description validate party inputs on create and update operations
-   * @memberof UserValidation
-   * @static
-   *
-   * @param {object} req
-   * @param {object} res
-   * @param {object} next
-   *
-   * @returns {object} get error message
-   */
-  static createProfile(req, res, next) {
-    const { fullname, location_id } = req.body;
-
-    const check = checkItem({
-      fullname,
-      location_id
-    });
-
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        data: [check]
-      });
-    }
-    return next();
-  }
-
-  static locationId(req, res, next) {
-    const id = req.params.id;
-
-    const check = checkItem({ id });
-
-    if (Object.keys(check).length > 0) {
-      return res.status(400).json({
-        statusCode: 400,
-        data: [check]
-      });
-    }
-    return next();
   }
 
   static async lifehackValidation(req, res, next) {
