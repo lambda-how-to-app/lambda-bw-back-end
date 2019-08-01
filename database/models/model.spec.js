@@ -5,6 +5,9 @@ const hackModel = require('./lifeHackModel');
 let createdHack = {};
 
 const user = {
+  fullname: 'Cordy Skala',
+  profileimage:
+    'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg',
   username: 'john',
   email: 'john@gmail.com',
   password: '$2y$12$eY9IzXa96Qfaar61tOHnT.27ExyCJhlFnk4jR2ZOUzTaeEDO2D.46',
@@ -37,31 +40,35 @@ describe('Test case for user table', () => {
     let usersByEmail = await userModel.findSingleUser({
       email: createdUser.email
     });
+    let usersByRole = await userModel.findSingleUser({
+      guide: createdUser.guide
+    });
     expect(usersByUsername).toMatchObject(usersByUsername);
     expect(usersById).toMatchObject(usersById);
     expect(usersByEmail).toMatchObject(usersByEmail);
+    expect(usersByRole).toMatchObject(usersByRole);
   });
-  it('should get all users profile by type', async () => {
-    let type1 = 'users';
-    let type2 = 'guides';
-    let allusers = await userModel.findAllProfile();
-    let users = await userModel.findAllProfile(type1);
-    let guides = await userModel.findAllProfile(type2);
-    expect(allusers).toMatchObject(allusers);
-    expect(users).toMatchObject(users);
-    expect(guides).toMatchObject(guides);
-  });
-  it('should create guides profile', async () => {
-    const guideProfile = {
-      fullname: 'Averill Giddons',
-      auth_id: createdUser.id,
-      location_id: 6,
-      profileimage:
-        'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
-    };
-    let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
-    expect(newGuide).toMatchObject(guideProfile);
-  });
+  // it('should get all users profile by type', async () => {
+  //   let type1 = 'users';
+  //   let type2 = 'guides';
+  //   let allusers = await userModel.findAllProfile();
+  //   let users = await userModel.findAllProfile(type1);
+  //   let guides = await userModel.findAllProfile(type2);
+  //   expect(allusers).toMatchObject(allusers);
+  //   expect(users).toMatchObject(users);
+  //   expect(guides).toMatchObject(guides);
+  // });
+  // it('should create guides profile', async () => {
+  //   const guideProfile = {
+  //     fullname: 'Averill Giddons',
+  //     auth_id: createdUser.id,
+  //     location_id: 6,
+  //     profileimage:
+  //       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
+  //   };
+  //   let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
+  //   expect(newGuide).toMatchObject(guideProfile);
+  // });
 
   it('Should create new hack', async () => {
     const validHack = {
@@ -118,5 +125,91 @@ describe('Test case for user table', () => {
     let Hack = await hackModel.addHack(newHack);
     const deletion = await hackModel.deleteHack(Hack.id);
     expect(deletion).toBeTruthy();
+  });
+  it('should create step for an existing hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Laravel',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'Any thing yo wanna say'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    expect(addedStep).toMatchObject({ ...newStep, hack_id: Hack.id });
+  });
+  it('should get all steps for an existing life hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Ruby',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install ruby on rails'
+    };
+    await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    let steps = await hackModel.getStepsForSingleHack(Hack.id);
+    expect(steps).toMatchObject(steps);
+  });
+  it('should update a step for an existing life hack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Flask',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install flask for python'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    const stepUpdate = {
+      steps: 'Update installed ruby on rails'
+    };
+    let steps = await hackModel.updateStep(stepUpdate, addedStep.id);
+    expect(steps).toMatchObject(stepUpdate);
+  });
+
+  it('should delete a selected step', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'PHP',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    expect(Hack).toMatchObject(newHack);
+    const newStep = {
+      steps: 'install WAMP or MAMP'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    const deletion = await hackModel.deleteStep(addedStep.id);
+    expect(deletion).toBeTruthy();
+  });
+  it('should get all steps', async () => {
+    let steps = await hackModel.getAllSteps();
+    expect(steps).toMatchObject(steps);
+  });
+  it('should get a single step', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Baking Cake',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    const newStep = {
+      steps: 'install WAMP or MAMP'
+    };
+    let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
+    let step = await hackModel.getSingleStep({ id: addedStep.id });
+    expect(step).toMatchObject(step);
   });
 });

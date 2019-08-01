@@ -18,13 +18,15 @@ module.exports = class UserValidation {
    * @returns {obj} Validation error messages or contents of req.body
    */
   static async userInput(req, res, next) {
-    const { guide, email, password } = req.body;
+    const { guide, email, password, fullname, profileimage } = req.body;
     const username = req.body.username.trim();
 
     const check = checkItem({
       username,
       email,
-      password
+      password,
+      fullname,
+      profileimage
     });
 
     if (Object.keys(check).length > 0) {
@@ -57,6 +59,8 @@ module.exports = class UserValidation {
       username,
       email,
       password: hash,
+      fullname,
+      profileimage,
       guide
     });
     // eslint-disable-next-line require-atomic-updates
