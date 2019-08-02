@@ -64,4 +64,6 @@ router
 
 router.route('/save/:id/lifehack').post(AuthenticateToken, LifeHack.saveHacks);
 
+router.route('/reviews').get(AuthenticateToken, LifeHack.getAllReviews);
+
 module.exports = router;

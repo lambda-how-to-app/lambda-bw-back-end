@@ -216,7 +216,9 @@ describe('Test case for user table', () => {
     let review = await userModel.addReview({
       user_id: createdUser.id,
       post_id: Hack.id,
-      review: 'I love this life'
+      review: 'I love this life',
+      rating: 4,
+      like: true
     });
     expect(review).toMatchObject(review);
   });

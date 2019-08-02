@@ -25,6 +25,8 @@ exports.up = function(knex) {
       table.increments();
       table.unique(['post_id', 'user_id']);
       table.string('review', 255).notNullable();
+      table.boolean('like').defaultTo(false);
+      table.integer('rating');
       table
         .integer('user_id')
         .unsigned()

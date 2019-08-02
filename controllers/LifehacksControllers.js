@@ -126,7 +126,7 @@ const deleteHack = async (req, res) => {
 const createReviews = async (req, res) => {
   try {
     const { id } = req.params;
-    const review = req.body;
+    const { rating, like, review } = req.body;
     const { userId } = req.decoded;
 
     const hackToReview = await guideModel.getSingleHack({ id });
@@ -141,13 +141,30 @@ const createReviews = async (req, res) => {
     const newReview = await userModel.addReview({
       user_id: userId,
       post_id: id,
-      review: review
+      review: review,
+      rating,
+      like
     });
     return requestHelper.success(
       res,
       201,
       'Review Added Successfully',
       newReview
+    );
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
+const getAllReviews = async (req, res) => {
+  try {
+    const { userId } = req.decoded;
+    const reviews = await userModel.getReviews();
+    requestHelper.success(
+      res,
+      200,
+      'LifeHacks retrieved Successfully',
+      reviews
     );
   } catch (err) {
     return requestHelper.error(res, 500, 'server error');
@@ -190,5 +207,6 @@ module.exports = {
   updateHack,
   deleteHack,
   createReviews,
-  saveHacks
+  saveHacks,
+  getAllReviews
 };

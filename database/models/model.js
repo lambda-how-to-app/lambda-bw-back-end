@@ -59,11 +59,20 @@ const addReview = async review => {
     }
   }
 };
+// select lifehacks.title, reviews.rating, reviews.like from lifehacks
+// join reviews on reviews.post_id = lifehacks.id
+const getReviews = async () => {
+  return db
+    .select('lifehacks.title', 'reviews.rating', 'reviews.like')
+    .from('lifehacks')
+    .join('reviews', 'reviews.post_id', 'lifehacks.id');
+};
 
 module.exports = {
   addUser,
   findAuthUser,
   findSingleUser,
   saveHack,
-  addReview
+  addReview,
+  getReviews
 };
