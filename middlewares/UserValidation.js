@@ -136,4 +136,18 @@ module.exports = class UserValidation {
     }
     return next();
   }
+
+  static async reviewsValidation(req, res, next) {
+    const { review } = req.body;
+
+    const check = checkItem({ review });
+
+    if (Object.keys(check).length > 0) {
+      return res.status(400).json({
+        statusCode: 400,
+        data: [check]
+      });
+    }
+    return next();
+  }
 };

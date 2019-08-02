@@ -60,7 +60,11 @@ router
 
 router
   .route('/review/:id/lifehack')
-  .post(AuthenticateToken, LifeHack.createReviews);
+  .post(
+    AuthenticateToken,
+    UserValidation.reviewsValidation,
+    LifeHack.createReviews
+  );
 
 router.route('/save/:id/lifehack').post(AuthenticateToken, LifeHack.saveHacks);
 
