@@ -57,4 +57,11 @@ router
   .get(AuthenticateToken, HackSteps.getStepById)
   .put(AuthenticateToken, UserValidation.stepsValidation, HackSteps.updateStep)
   .delete(AuthenticateToken, HackSteps.deleteStep);
+
+router
+  .route('/review/:id/lifehack')
+  .post(AuthenticateToken, LifeHack.createReviews);
+
+router.route('/save/:id/lifehack').post(AuthenticateToken, LifeHack.saveHacks);
+
 module.exports = router;

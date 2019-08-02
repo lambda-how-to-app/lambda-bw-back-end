@@ -34,28 +34,30 @@ const addUser = async user => {
     .then(user => user[0]);
   return newuser;
 };
-// function getReviewed() {
-//   return db
-//     .select('lifehacks.id', 'lifehacks.title')
-//     .from('lifehacks')
-//     .innerJoin('savedhacks', 'savedhacks.user_id', 'lifehacks.id')
-//     .where('user_id', user_id)
-//     .returning('*');
-// }
 const saveHack = async post => {
-  const saved = await db('savedhacks')
-    .insert(post)
-    .returning('*');
-
-  return saved;
+  try {
+    const saved = await db('savedhacks')
+      .insert(post)
+      .returning('*');
+    return saved;
+  } catch (err) {
+    if (err.routine === '_bt_check_unique') {
+      return { status: 409, mesage: 'You have already reviewed this lifehack' };
+    }
+  }
 };
 
 const addReview = async review => {
-  const postReview = await db('reviews')
-    .insert(review)
-    .returning('*');
-  console.log('===========', postReview);
-  return postReview;
+  try {
+    const postReview = await db('reviews')
+      .insert(review)
+      .returning('*');
+    return postReview;
+  } catch (err) {
+    if (err.routine === '_bt_check_unique') {
+      return { status: 409, mesage: 'You have already saved this lifehack' };
+    }
+  }
 };
 
 module.exports = {

@@ -1,5 +1,6 @@
 const requestHelper = require('../helpers/requestHelper');
 const guideModel = require('../database/models/lifeHackModel');
+const userModel = require('../database/models/model');
 
 const createLifeHack = async (req, res) => {
   const guide_auth_id = req.decoded.userId;
@@ -121,10 +122,73 @@ const deleteHack = async (req, res) => {
     return requestHelper.error(res, 500, 'server error');
   }
 };
+
+const createReviews = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const review = req.body;
+    const { userId } = req.decoded;
+
+    const hackToReview = await guideModel.getSingleHack({ id });
+
+    if (!hackToReview) {
+      return requestHelper.error(
+        res,
+        404,
+        'Life hack with provided id does not exist'
+      );
+    }
+    const newReview = await userModel.addReview({
+      user_id: userId,
+      post_id: id,
+      review: review
+    });
+    return requestHelper.success(
+      res,
+      201,
+      'Review Added Successfully',
+      newReview
+    );
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
+const saveHacks = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.decoded;
+
+    const hackToSave = await guideModel.getSingleHack({ id });
+
+    if (!hackToSave) {
+      return requestHelper.error(
+        res,
+        404,
+        'Life hack with provided id does not exist'
+      );
+    }
+    const newSaved = await userModel.saveHack({
+      user_id: userId,
+      post_id: id
+    });
+    return requestHelper.success(
+      res,
+      201,
+      'Lifehack Saved Successfully',
+      newSaved
+    );
+  } catch (err) {
+    return requestHelper.error(res, 500, 'server error');
+  }
+};
+
 module.exports = {
   createLifeHack,
   getLifeHacks,
   getOneHack,
   updateHack,
-  deleteHack
+  deleteHack,
+  createReviews,
+  saveHacks
 };
