@@ -48,28 +48,6 @@ describe('Test case for user table', () => {
     expect(usersByEmail).toMatchObject(usersByEmail);
     expect(usersByRole).toMatchObject(usersByRole);
   });
-  // it('should get all users profile by type', async () => {
-  //   let type1 = 'users';
-  //   let type2 = 'guides';
-  //   let allusers = await userModel.findAllProfile();
-  //   let users = await userModel.findAllProfile(type1);
-  //   let guides = await userModel.findAllProfile(type2);
-  //   expect(allusers).toMatchObject(allusers);
-  //   expect(users).toMatchObject(users);
-  //   expect(guides).toMatchObject(guides);
-  // });
-  // it('should create guides profile', async () => {
-  //   const guideProfile = {
-  //     fullname: 'Averill Giddons',
-  //     auth_id: createdUser.id,
-  //     location_id: 6,
-  //     profileimage:
-  //       'https://image.shutterstock.com/image-photo/passport-photo-portrait-asian-smiling-260nw-1045734418.jpg'
-  //   };
-  //   let newGuide = await userModel.addProfile(guideProfile, createdUser.id);
-  //   expect(newGuide).toMatchObject(guideProfile);
-  // });
-
   it('Should create new hack', async () => {
     const validHack = {
       guide_auth_id: createdUser.id,
@@ -211,5 +189,37 @@ describe('Test case for user table', () => {
     let addedStep = await hackModel.addStep({ ...newStep, hack_id: Hack.id });
     let step = await hackModel.getSingleStep({ id: addedStep.id });
     expect(step).toMatchObject(step);
+  });
+  it('should save hack for a user', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Cake',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+    let save = await userModel.saveHack({
+      user_id: createdUser.id,
+      post_id: Hack.id
+    });
+    expect(save).toMatchObject(save);
+  });
+  it('should add reviews for a specific lifehack', async () => {
+    const newHack = {
+      guide_auth_id: createdUser.id,
+      title: 'Money',
+      banner_image:
+        'https://static.boredpanda.com/blog/wp-content/uuuploads/life-hacks/life-hacks-1.jpg'
+    };
+    let Hack = await hackModel.addHack(newHack);
+
+    let review = await userModel.addReview({
+      user_id: createdUser.id,
+      post_id: Hack.id,
+      review: 'I love this life',
+      rating: 4,
+      like: true
+    });
+    expect(review).toMatchObject(review);
   });
 });
