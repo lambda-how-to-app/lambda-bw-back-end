@@ -158,7 +158,6 @@ const createReviews = async (req, res) => {
 
 const getAllReviews = async (req, res) => {
   try {
-    const { userId } = req.decoded;
     const reviews = await userModel.getReviews();
     requestHelper.success(
       res,
